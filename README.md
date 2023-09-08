@@ -1,4 +1,4 @@
-# Multi Layer Copy and Paste
+# Multi Layer Copy/Blueprint
 A Shapez mod that allows multiple layers to be selected and copied.
 Original from [CEbbinghaus's PR](https://github.com/tobspr-games/shapez.io/pull/785)
 
