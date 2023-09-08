@@ -2,7 +2,7 @@
 const METADATA = {
     website: "https://github.com/manyu-a",
     author: "ichigatsu13",
-    name: "Multi Layer Copy and Paste",
+    name: "Multi Layer Copy/Blueprint",
     version: "1",
     id: "bothlayercopy",
     description:
@@ -739,7 +739,6 @@ class Mod extends shapez.Mod {
         this.modInterface.extendClass(shapez.HUDBlueprintPlacer, HUDBlueprintPlacerExt);
         this.modInterface.extendClass(shapez.GameHUD, GameHUDExt);
         this.modInterface.extendClass(shapez.MapResourcesSystem, MapResourcesSystemExt);
-        this.modInterface.extendClass(shapez.HUDKeybindingOverlay, HUDKeybindingOverlayExt);
 
         this.modInterface.registerIngameKeybinding({
             id: "massSelectSelectMultiLayer",
