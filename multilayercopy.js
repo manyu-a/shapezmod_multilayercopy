@@ -1,9 +1,9 @@
 // @ts-nocheck
 const METADATA = {
-    website: "https://github.com/manyu-a",
+    website: "https://github.com/manyu-a/shapezmod_multilayercopy",
     author: "ichigatsu13",
     name: "Multi Layer Copy/Blueprint",
-    version: "1",
+    version: "1.1.0",
     id: "bothlayercopy",
     description:
         "allowing Multiple layers to be selected at once",
@@ -11,6 +11,8 @@ const METADATA = {
     minimumGameVersion: ">=1.5.0",
     // Maybe
     doesNotAffectSavegame: true,
+    // sk update
+    modId: "3318898",
 };
 
 
@@ -66,8 +68,12 @@ const HUDMassSelectorExt = ({ $super, $old }) => ({
         if (this.root.bulkOperationRunning) {
             return;
         }
-        const index = this.selectedEntities.indexOf(entity);
-        if (index != -1) this.selectedEntities.splice(index, 1);
+        // find and delete all entity
+        let index = this.selectedEntities.indexOf(entity);
+        while (index !== -1) {
+            this.selectedEntities.splice(index, 1);
+            index = this.selectedEntities.indexOf(entity);
+        }
     },
 
     onBack() {
@@ -187,7 +193,9 @@ const HUDMassSelectorExt = ({ $super, $old }) => ({
 
                 for (let i = 0; i < entities.length; ++i) {
                     const entity = entities[i];
-                    if (entity.destroyed) continue;
+                    if (entity.destroyed) {
+                        continue;
+                    }
                     if (!this.root.logic.tryDeleteBuilding(entity)) {
                         logger.error("Error in mass cut, could not remove building");
                         this.selectedEntities.splice(i, 1);
@@ -691,7 +699,7 @@ const GameHUDExt = ({ $old }) => ({
             this.parts.colorBlindHelper = new shapez.HUDColorBlindHelper(this.root);
         }
 
-        if (!shapez.IS_RELEASE && !shapez.IS_DEBUG) {
+        if (!shapez.BUILD_OPTIONS.IS_RELEASE && !shapez.IS_DEBUG) {
             this.parts.betaOverlay = new shapez.HUDBetaOverlay(this.root);
         }
 
@@ -703,7 +711,6 @@ const GameHUDExt = ({ $old }) => ({
         shapez.MOD_SIGNALS.hudInitializer.dispatch(this.root);
 
         const frag = document.createDocumentFragment();
-        console.log($old);
         for (const key in this.parts) {
             console.log(key);
             shapez.MOD_SIGNALS.hudElementInitialized.dispatch(this.parts[key]);
@@ -726,7 +733,6 @@ const GameHUDExt = ({ $old }) => ({
         /* dev:end*/
     }
 });
-
 
 
 class Mod extends shapez.Mod {
